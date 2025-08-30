@@ -183,7 +183,7 @@ func (c *DaramjweeCache) ScheduleRefresh(ctx context.Context, key string, fetche
 			// WARN: if oldMetadata's data is changed in Fetcher, we need to be careful about stale data
 			isStale := c.isColdStoreCachedStale(oldMetadata)
 
-			if isStale {
+			if isStale && c.ColdStore != nil {
 				// schedule background copy to cold store
 				c.scheduleSetToStore(context.Background(), c.ColdStore, key)
 			}
